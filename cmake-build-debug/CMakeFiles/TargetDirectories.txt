@@ -1,0 +1,3 @@
+/Users/atrevalis/Desktop/Labs/1C1S/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/atrevalis/Desktop/Labs/1C1S/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/atrevalis/Desktop/Labs/1C1S/cmake-build-debug/CMakeFiles/1C1S.dir
