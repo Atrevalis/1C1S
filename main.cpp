@@ -120,7 +120,7 @@ int** ConsoleInsert(bool check,int **&array,char symbol){//ПРОВЕРИТЬ О
     }
     return array;
 }
-int** FileInsert(bool check,int **&array,int num){//Может быть проблема с Переводом чар в инт
+int** FileInsert(bool check,int **&array,char symbol){//Может быть проблема с Переводом чар в инт
     if(check){delete[] array;}
     bool  exit=false;
     string path;
@@ -132,8 +132,8 @@ int** FileInsert(bool check,int **&array,int num){//Может быть проб
         if (matrix.is_open()) {
             matrix.seekg(0, ios_base::end);
             int dim = (int) sqrt((double) matrix.tellg());//нахождение размерности
-            if(num == 1){ dimA = dim;}
-            if(num == 2){ dimB = dim;}
+            if(symbol == 1){ dimA = dim;}
+            if(symbol == 2){ dimB = dim;}
             array = new int*[dim];//создание строк
             for(int i = 0;i<dim;i++){array[i]=new int[dim];}//создание столбцов
             for(int i=0;i<dim;i++){
