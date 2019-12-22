@@ -4,8 +4,8 @@
 int dimA;
 int dimB;//хуйня не работает
 using namespace std;
-int** ConsoleInsert(bool check,int **&predArray, char symbol);
-int** FileInsert(bool check,int **&predArray, char symbol);
+int** ConsoleInsert(bool check,int **&array, char symbol);
+int** FileInsert(bool check,int **&array, char symbol);
 void editArray(bool check,int **&array,int dim);
 
 void outputArray(bool check, int **&Array, int dim);
@@ -120,10 +120,9 @@ int** ConsoleInsert(bool check,int **&array,char symbol){//ПРОВЕРИТЬ О
     }
     return array;
 }
-int** FileInsert(bool check,int **&predArray,int num){//Может быть проблема с Переводом чар в инт
-    if(check){delete[] predArray;}
+int** FileInsert(bool check,int **&array,int num){//Может быть проблема с Переводом чар в инт
+    if(check){delete[] array;}
     bool  exit=false;
-    int **array;
     string path;
     cout<<"Введите путь файла"<<"\n";
     cin>>path;
