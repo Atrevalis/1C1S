@@ -3,10 +3,11 @@
 #include <cmath>
 int dimA;//по возможности заменить функцией
 int dimB;//
+int dimC;
 using namespace std;
 int** consoleInsert(bool check,int **&array, char symbol);
 int** fileInsert(bool check,int **&array, char symbol);
-void editArray(bool check,int **&array);
+void editArray(bool check,int **&array, int dim);
 void fileOutput(bool check, int **&array, int dim);
 void consoleOutput(bool check, int **&array, int dim);
 int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB);
@@ -14,13 +15,16 @@ int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB);
 int main() {
     char A = 'A';//symbol
     char B = 'B';//symbol
+    char C = 'C';//symbol
     char f;//номер функции
     bool exit = false;// выход Д/Н
-    int ins;//номер матрицы
+    char ins;//номер матрицы
     int **arrayA;
     int **arrayB;
+    int **arrayC;
     bool checkA = false;//чекер заполнения массива А
-    bool checkB = false;//чекер заполнения массива Б
+    bool checkB = false;//чекер заполнения массива B
+    bool checkC = false;//чекер заполнения массива C
     while(!exit){
         cout<<"Выберите дальнейшее действие:"<<"\n";
         cout<<"1:Ввод матрицы "<<"\n";
@@ -32,67 +36,94 @@ int main() {
         switch(f){
             case '1':
                 cout<<"Выберите какую матрицу вы будете вводить:"<<"\n";
-                cout<<"1:A"<<"\n"<<"2:Б"<<"\n"<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
-                cin>>ins;//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
+                cout<<"1:A"<<"\n"<<"2:B"<<"\n"<<"3:C"<<"\n"<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
+                cin>>ins;
                 switch(ins){
-                    case 1:
+                    case '1':
                         cout<<"Выберите каким способом вы будете заполнять матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
                         cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
-                        cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
+                        cin>>(ins);
                         switch(ins){
-                            case 1: arrayA = consoleInsert(checkA,arrayA,A);
+                            case '1': arrayA = consoleInsert(checkA,arrayA,A);
                                 checkA = true;
                                 break;
-                            case 2: arrayA = fileInsert(checkA,arrayA,A);//ADD ARRAY C
+                            case '2': arrayA = fileInsert(checkA,arrayA,A);
                                 checkA = true;
                                 break;
                             default:break;
                         }
                         break;
-                    case 2:
+                    case '2':
                         cout<<"Выберите каким способом вы будете заполнять матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
                         cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
                         cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
                         switch(ins){
-                            case 1: arrayB = consoleInsert(checkB,arrayB,B);
+                            case '1': arrayB = consoleInsert(checkB,arrayB,B);
                                 checkB = true;
                                 break;
-                            case 2: arrayB = fileInsert(checkB,arrayB,B);//ADD ARRAY C
+                            case '2': arrayB = fileInsert(checkB,arrayB,B);
                                 checkB = true;
                                 break;
                             default:break;
                         }
                         break;
-                    default:break;//заглушка
+                    case '3':
+                        cout<<"Выберите каким способом вы будете заполнять матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
+                        cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
+                        cin>>(ins);
+                        switch(ins){
+                            case '1': arrayC = consoleInsert(checkC,arrayC,C);
+                                checkB = true;
+                                break;
+                            case '2': arrayC = fileInsert(checkC,arrayC,C);
+                                checkB = true;
+                                break;
+                            default:break;
+                        }
+                        break;
+                    default:break;
                 }
                 break;
             case '2':
-                cout<<"Выберите, какую матрицу вы хотите вывести"<<"\n"<<"1:А"<<"\n"<<"2:Б"<<"\n";
+                cout<<"Выберите, какую матрицу вы хотите вывести"<<"\n"<<"1:А"<<"\n"<<"2:B"<<"3:C"<<"\n";
                 cin>>(ins);
                 switch(ins){
-                    case 1:
+                    case '1':
                         cout<<"Выберите каким способом вы будете выводить матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
                         cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
-                        cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
+                        cin>>(ins);
                         switch(ins){
-                            case 1:
+                            case '1':
                                 consoleOutput(checkA,arrayA,dimA);
                                 break;
-                            case 2:
+                            case '2':
                                 fileOutput(checkA,arrayA,dimA);
                                 break;
                         }
                         break;
-                    case 2:
+                    case '2':
                         cout<<"Выберите каким способом вы будете выводить матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
                         cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
-                        cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
+                        cin>>(ins);
                         switch(ins){
-                            case 1:
+                            case '1':
                                 consoleOutput(checkB,arrayB,dimB);
                                 break;
-                            case 2:
+                            case '2':
                                 fileOutput(checkB,arrayB,dimB);
+                                break;
+                        }
+                        break;
+                    case '3':
+                        cout<<"Выберите каким способом вы будете выводить матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
+                        cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
+                        cin>>(ins);
+                        switch(ins){
+                            case '1':
+                                consoleOutput(checkC,arrayC,dimC);
+                                break;
+                            case '2':
+                                fileOutput(checkC,arrayC,dimC);
                                 break;
                         }
                         break;
@@ -101,19 +132,24 @@ int main() {
                 }
                 break;
             case '3':
-                cout<<"Выберите, какую матрицу вы хотите отредактировать"<<"\n"<<"1:А"<<"\n"<<"2:Б"<<"\n";
+                cout<<"Выберите, какую матрицу вы хотите отредактировать"<<"\n"<<"1:А"<<"\n"<<"2:B"<<"\n"<<"3:C"<<"\n";
                 cin>>(ins);
                 switch(ins) {
-                    case 1:
-                        editArray(checkA, arrayA);
+                    case '1':
+                        editArray(checkA, arrayA,dimA);
                         break;
-                    case 2:
-                        editArray(checkB, arrayB);
+                    case '2':
+                        editArray(checkB, arrayB,dimB);
+                        break;
+                    case '3':
+                        editArray(checkC, arrayC,dimC);
                         break;
                     default:
                         break;
                 }
-            case '4': break;
+            case '4':
+                cout<<"Выберите "<<"\n";
+                break;
             case '5':
                 exit = true;
                 cout<<"ОКОНЧАНИЕ РАБОТЫ ПРОГРАММЫ";
@@ -135,7 +171,6 @@ void consoleOutput(bool check, int **&array, int dim) {//DONE
         }
     }else{cout<<"Массива не существует"<<"\n";}
 }
-
 void fileOutput(bool check, int **&array, int dim){//DONE
     if (check) {
         ofstream matrix;
@@ -156,7 +191,6 @@ void fileOutput(bool check, int **&array, int dim){//DONE
         matrix.close();
     } else{cout<<"Массива не существует"<<"\n";}
 }
-
 int** consoleInsert(bool check,int **&array,char symbol){//DONE
     if(check){delete[] array;}
     int dim;
@@ -164,6 +198,7 @@ int** consoleInsert(bool check,int **&array,char symbol){//DONE
     cin>>dim;//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
     if(symbol == 'A'){ dimA = dim;}
     if(symbol == 'B'){ dimB = dim;}
+    if(symbol == 'C'){ dimC = dim;}
     array = new int*[dim];//создание строк
     for(int i = 0;i<dim;i++){array[i]=new int[dim];}//создание столбцов
     cout<<"Введите матрицу размерностью "<<dim<<"X"<<dim<<"\n";
@@ -189,6 +224,7 @@ int** fileInsert(bool check,int **&array,char symbol){//DONE
             matrix.seekg(0, ios_base::beg);
             if(symbol == 'A'){ dimA = dim;}
             if(symbol == 'B'){ dimB = dim;}
+            if(symbol == 'C'){ dimC = dim;}
             array = new int*[dim];//создание строк
             for(int i = 0;i<dim;i++){array[i]=new int[dim];}//создание столбцов
             for(int i=0;i<dim;i++){
@@ -202,7 +238,7 @@ int** fileInsert(bool check,int **&array,char symbol){//DONE
     matrix.close();
     return array;
 }
-void editArray(bool check,int **&array){//DONE
+void editArray(bool check,int **&array,int dim){//DONE
     int column;
     int line;
     char trigger;
@@ -215,8 +251,9 @@ void editArray(bool check,int **&array){//DONE
             cin >> line;
             cout << "Введите столбец в котором содержится элемент" << "\n";
             cin >> column;
+            if((line<=dim)&&(column<=dim)){
             cout << "Введите новое значение " << "\n";
-            cin >> array[--line][--column];
+            cin >> array[--line][--column];}else{cout<<"элемента не существует"<< "\n";}
             cout << "Продолжить изменение массива? Y/N"<< "\n";
             cin >> trigger;
             if ((trigger == 'N') or (trigger == 'n')) { exit = true; }
