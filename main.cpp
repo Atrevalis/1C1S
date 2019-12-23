@@ -10,7 +10,8 @@ int** fileInsert(bool check,int **&array, char symbol);
 void editArray(bool check,int **&array, int dim);
 void fileOutput(bool check, int **&array, int dim);
 void consoleOutput(bool check, int **&array, int dim);
-int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB);
+int** calculate(int **&array1,int **&array2,int **&array3, bool check1,bool check2,int dim1,int dim2);
+int summ(int dim, int indi,int indj,int **&array1,int **&array2) ;
 
 int main() {
     char A = 'A';//symbol
@@ -133,6 +134,7 @@ int main() {
                 break;
             case '3':
                 cout<<"Выберите, какую матрицу вы хотите отредактировать"<<"\n"<<"1:А"<<"\n"<<"2:B"<<"\n"<<"3:C"<<"\n";
+                cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
                 cin>>(ins);
                 switch(ins) {
                     case '1':
@@ -148,7 +150,20 @@ int main() {
                         break;
                 }
             case '4':
-                cout<<"Выберите "<<"\n";
+                cout<<"Выберите вариант умножения матриц:"<<"\n";
+                cout<<"1:А*B = С"<<"\n"<<"2:B*A = С"<<"\n";
+                cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
+                cin>>(ins);
+                switch (ins){
+                    case '1':
+                        arrayC = calculate(arrayA,arrayB,arrayC,checkA,checkB,dimA,dimB);
+                        break;
+                    case '2':
+                        arrayC = calculate(arrayA,arrayB,arrayC,checkA,checkB,dimA,dimB);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             case '5':
                 exit = true;
@@ -260,7 +275,22 @@ void editArray(bool check,int **&array,int dim){//DONE
         }
     } else{cout<<"Массива не существует"<<"\n";}
 }
-int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB){
-
+int** calculate(int **&array1,int **&array2,int **&array3, bool check1,bool check2,int dim1,int dim2){
+    if(dim1==dim2){
+    delete[] array3;
+    int dim = dim1;
+        array3 = new int*[dim];//создание строк
+        for(int i = 0;i<dim;i++){array3[i]=new int[dim];}//создание столбцов
+        for(int i=0;i<dim;i++){
+            for(int j=0;j<dim;j++){
+                array3[i][j]=summ(dim,i,j,array1,array2);
+            }
+        }
+    }else{cout<<"Умножение не осуществимо"<<"\n";}
+    return array3;
 }
-
+int summ(int dim, int indi,int indj,int **&array1,int **&array2) {
+    int summ = 0;
+    for (int i = 0; i < dim; i++) {summ += array1[indi][i] * array2[i][indj];}
+    return summ;
+}
