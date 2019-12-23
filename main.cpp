@@ -10,7 +10,7 @@ int** fileInsert(bool check,int **&array, char symbol);
 void editArray(bool check,int **&array, int dim);
 void fileOutput(bool check, int **&array, int dim);
 void consoleOutput(bool check, int **&array, int dim);
-int** calculate(int **&array1,int **&array2,int **&array3, int dim1,int dim2);
+int **calculate(int **&array1, int **&array2, int **&array3, int dim);
 int summ(int dim, int indi,int indj,int **&array1,int **&array2) ;
 
 int main() {
@@ -32,7 +32,8 @@ int main() {
         cout<<"2:Вывод матрицы "<<"\n";
         cout<<"3:Редактирование матрицы "<<"\n";
         cout<<"4:Перемножение матриц "<<"\n";
-        cout<<"5:Завершение программы "<<"\n";
+        cout<<"5:ИДЗ "<<"\n";
+        cout<<"6:Завершение программы "<<"\n";
         cin>>f;
         switch(f){
             case '1':
@@ -160,11 +161,11 @@ int main() {
                     cin >> (ins);
                     switch (ins) {
                         case '1':
-                            arrayC = calculate(arrayA, arrayB, arrayC,  dimA, dimB);
+                            arrayC = calculate(arrayA, arrayB, arrayC, dimA);
                             checkC = true;
                             break;
                         case '2':
-                            arrayC = calculate(arrayB, arrayA, arrayC,  dimB, dimA);
+                            arrayC = calculate(arrayB, arrayA, arrayC, dimB);
                             checkC = true;
                             break;
                         default:
@@ -173,6 +174,19 @@ int main() {
                 }else{cout<<"Умножение не осуществимо"<<"\n";}
                 break;
             case '5':
+                cout<<"1: Модульное умножение матриц"<<"\n";
+                cout<<"2: Копирование уникальных элементов"<<"\n";
+                cin>>(ins);
+                switch (ins){
+                    case '1':
+                        if(checkA && checkB &&(dimA=dimB)) {}
+                        break;
+                    case '2':
+
+                        break;
+                }
+                break;
+            case '6':
                 exit = true;
                 cout<<"ОКОНЧАНИЕ РАБОТЫ ПРОГРАММЫ";
                 break;
@@ -282,9 +296,8 @@ void editArray(bool check,int **&array,int dim){//DONE
         }
     } else{cout<<"Массива не существует"<<"\n";}
 }
-int** calculate(int **&array1,int **&array2,int **&array3, int dim1,int dim2){//DONE
+int **calculate(int **&array1, int **&array2, int **&array3, int dim) {//DONE
     delete[] array3;
-    int dim = dim1;
     dimC = dim;
         array3 = new int*[dim];//создание строк
         for(int i = 0;i<dim;i++){array3[i]=new int[dim];}//создание столбцов
