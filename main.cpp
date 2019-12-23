@@ -2,11 +2,11 @@
 #include <fstream>
 #include <cmath>
 int dimA;//по возможности заменить функцией
-int dimB;//по возможности заменить функцией
+int dimB;//
 using namespace std;
 int** consoleInsert(bool check,int **&array, char symbol);
 int** fileInsert(bool check,int **&array, char symbol);
-void editArray(bool check,int **&array,int dim);
+void editArray(bool check,int **&array);
 void fileOutput(bool check, int **&array, int dim);
 void consoleOutput(bool check, int **&array, int dim);
 int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB);
@@ -41,11 +41,11 @@ int main() {
                         cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
                         switch(ins){
                             case 1: arrayA = consoleInsert(checkA,arrayA,A);
-                            checkA = true;
-                            break;
-                          case 2: arrayA = fileInsert(checkA,arrayA,A);
-                          checkA = true;
-                          break;
+                                checkA = true;
+                                break;
+                            case 2: arrayA = fileInsert(checkA,arrayA,A);//ADD ARRAY C
+                                checkA = true;
+                                break;
                             default:break;
                         }
                         break;
@@ -57,7 +57,7 @@ int main() {
                             case 1: arrayB = consoleInsert(checkB,arrayB,B);
                                 checkB = true;
                                 break;
-                            case 2: arrayB = fileInsert(checkB,arrayB,B);
+                            case 2: arrayB = fileInsert(checkB,arrayB,B);//ADD ARRAY C
                                 checkB = true;
                                 break;
                             default:break;
@@ -71,10 +71,30 @@ int main() {
                 cin>>(ins);
                 switch(ins){
                     case 1:
-                        consoleOutput(checkA,arrayA,dimA);
+                        cout<<"Выберите каким способом вы будете выводить матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
+                        cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
+                        cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
+                        switch(ins){
+                            case 1:
+                                consoleOutput(checkA,arrayA,dimA);
+                                break;
+                            case 2:
+                                fileOutput(checkA,arrayA,dimA);
+                                break;
+                        }
                         break;
                     case 2:
-                        consoleOutput(checkB,arrayB,dimB);
+                        cout<<"Выберите каким способом вы будете выводить матрицу"<<"\n"<<"1:Консоль"<<"\n"<<"2:Файл"<<"\n";
+                        cout<<"Чтобы вернутся в меню введите любое значение кроме предложенных"<<"\n";
+                        cin>>(ins);//ПОПРАВИТЬ ОШИБКУ С ВВОДОМ НЕ ЧИСЕЛ
+                        switch(ins){
+                            case 1:
+                                consoleOutput(checkB,arrayB,dimB);
+                                break;
+                            case 2:
+                                fileOutput(checkB,arrayB,dimB);
+                                break;
+                        }
                         break;
                     default:
                         break;
@@ -85,10 +105,10 @@ int main() {
                 cin>>(ins);
                 switch(ins) {
                     case 1:
-                        editArray(checkA, arrayA, dimA);
+                        editArray(checkA, arrayA);
                         break;
                     case 2:
-                        editArray(checkB, arrayB, dimB);
+                        editArray(checkB, arrayB);
                         break;
                     default:
                         break;
@@ -116,7 +136,26 @@ void consoleOutput(bool check, int **&array, int dim) {//DONE
     }else{cout<<"Массива не существует"<<"\n";}
 }
 
-void fileOutput(bool check, int **&array, int dim){}
+void fileOutput(bool check, int **&array, int dim){//DONE
+    if (check) {
+        ofstream matrix;
+        bool  exit=false;
+        string path;
+        while(!exit) {
+            cout<<"Введите путь файла"<<"\n";
+            cin>>path;
+            matrix.open(path);
+            if (matrix.is_open()) {
+                for(int i=0;i<dim;i++){
+                    for(int j=0;j<dim;j++){matrix<<array[i][j]<<" ";}
+                    matrix<<"\n";
+                }
+                exit = true;
+            } else {cout << "Файл не был найден, попробуйте еще раз" << "\n"; }
+        }
+        matrix.close();
+    } else{cout<<"Массива не существует"<<"\n";}
+}
 
 int** consoleInsert(bool check,int **&array,char symbol){//DONE
     if(check){delete[] array;}
@@ -135,11 +174,8 @@ int** consoleInsert(bool check,int **&array,char symbol){//DONE
     }
     return array;
 }
-int** fileInsert(bool check,int **&array,char symbol){//NOTDONE(check)
+int** fileInsert(bool check,int **&array,char symbol){//DONE
     if(check){delete[] array;}
-    int length = 0;
-    int dim = 0;
-    int temp=0;
     bool  exit=false;
     string path;
     ifstream matrix;
@@ -149,7 +185,6 @@ int** fileInsert(bool check,int **&array,char symbol){//NOTDONE(check)
         matrix.open(path);
         if (matrix.is_open()) {
             matrix.seekg(0, ios_base::end);
-            int a = matrix.tellg();
             int dim = (int) sqrt((double) matrix.tellg()/2);//нахождение размерности
             matrix.seekg(0, ios_base::beg);
             if(symbol == 'A'){ dimA = dim;}
@@ -167,7 +202,7 @@ int** fileInsert(bool check,int **&array,char symbol){//NOTDONE(check)
     matrix.close();
     return array;
 }
-void editArray(bool check,int **&array,int dim){//DONE
+void editArray(bool check,int **&array){//DONE
     int column;
     int line;
     char trigger;
@@ -188,5 +223,7 @@ void editArray(bool check,int **&array,int dim){//DONE
         }
     } else{cout<<"Массива не существует"<<"\n";}
 }
-int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB){}
+int** calculate(int **&arrayA,int **&arrayB, bool checkA,bool checkB){
+
+}
 
